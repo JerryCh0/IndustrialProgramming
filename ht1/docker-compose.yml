@@ -1,0 +1,46 @@
+version: '3.3'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    networks:
+      - net
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=messages
+
+  rabbitmq:
+    image: rabbitmq
+    restart: always
+    networks:
+      - net
+    ports:
+      - 5672:5672
+
+  consumer:
+   build:
+     context: ./Consumer
+   restart: always
+   links:
+     - rabbitmq
+     - postgres
+   networks:
+     - net
+
+  producer:
+    build: 
+      context: ./Producer
+    restart: always
+    stdin_open: true
+    tty: true
+    links:
+      - rabbitmq
+    networks:
+      - net
+
+networks:
+  net:
