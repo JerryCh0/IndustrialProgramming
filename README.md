@@ -1,4 +1,4 @@
-# IndustrialProgramming
+# Industrial Programming
 My homeworks of the industrial programming course at MIPT, spring 2018.
 
 ## Hometask 1
